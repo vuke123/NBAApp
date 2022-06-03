@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 import SnapKit
 
-class CustomTextField: UITextField {
+class SearchField: UITextField {
     private var color: UIColor?
-
+    let iconView = UIImageView()
+    let contentView = UIView()
     init(color: UIColor) {
         super.init(frame: .zero)
         self.color = color
@@ -25,10 +26,17 @@ class CustomTextField: UITextField {
     private func configureViews()  {
         guard let color = color else { return }
         backgroundColor = color
-        textColor = color
-        layer.cornerRadius = 0
+        self.placeholder = "Add a new item..."
+        textColor = .black
+        layer.cornerRadius = 7
         clipsToBounds = true
+        iconView.image = UIImage(systemName: "magnifyingglass")
+        contentView.addSubview(iconView)
         textAlignment = .center
-        
+        contentView.frame = CGRect(x: 0, y: 0, width: 10, height:  10)
+        iconView.frame =  CGRect(x: 5, y: 0, width:10, height:  10)
+        self.leftView = contentView
+        self.leftViewMode = .always
+        self.clearButtonMode = .whileEditing
     }
 }

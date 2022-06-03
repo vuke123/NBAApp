@@ -9,53 +9,232 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ExploreVC: UIViewController, UITableViewDelegate {
+class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
  
-    var titleSection = "All players"
-    private let tableView: UITableView = {
-        let tableView = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.plain)
-        tableView.register(PlayerTableViewCell.self, forCellReuseIdentifier: PlayerTableViewCell.identifier )
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
     
-    private let navigationView = NavigationTop(title1: "Players  ▼")
+   static private let userDefaults = UserDefaults.standard
+   private var titleSection : String = ""
+   private var allPlayers: [Player] = []
+   private var allTeams: [Team] = []
+   private var sortedArray: [String] = []
+    private var sortedPlayers:[Player] = []
+    
+    private var tableView: UITableView!
+    
+    private let navigationView = NavigationView(title1: "Players  ▼")
+    private let navigationView2 = NavigationView(title1: "Teams  ▼")
+
+    let searchView = SearchView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        exploreFragment()
+        fillWholeArray()
+        configureTableView()
+//      combination with UserDefaults to changing titleSection
         tableView.backgroundColor = .white
         tableView.dataSource = self
+        searchView.searchBar.delegate = self
         tableView.delegate = self
-        view.addSubview(tableView)
-        view.addSubview(navigationView)
+        addSubviews()
         addConstraints()
         self.navigationController?.isNavigationBarHidden = true
+    }
+    func fillWholeArray() {
+        if(titleSection == "All teams"){
+            NetworkManager.shared.getAllTeams() { [weak self] result in
+                guard let self = self else { return }
 
+                switch result {
+                case .success(let allTeams):
+                    self.allTeams  = allTeams
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            var count = 0
+            
+            for team in allTeams {
+                   sortedArray[count] = team.full_name
+                   count+=1
+                }
+            
+        } else {
+
+            titleSection = "All players"
+            NetworkManager.shared.getAllPlayers() { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let allPlayers):
+                    self.allPlayers  = allPlayers
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            var count = 0
+            
+               for player in allPlayers {
+                   sortedArray[count] = player.first_name + " " + player.last_name
+                   print(player.first_name)
+                   print("sejo")
+                   sortedPlayers[count] = player
+                   count+=1
+                }
+    }
+  }
+    func exploreFragment(){
+        
+        guard  let explore = ExploreVC.userDefaults.value(forKey: "ExploreFragment") else {
+            ExploreVC.userDefaults.set("Player", forKey: "ExploreFragment")
+            titleSection = "All players"
+            return
+        }
+        if explore as! String == "Player" {
+            titleSection = "All players"
+        }
+        else {
+            titleSection = "All teams"
+        }
+        return
+    }
+    func configureTableView(){
+            tableView = UITableView(frame: UIScreen.main.bounds, style: UITableView.Style.plain)
+            tableView.register(PlayerTableViewCell.self, forCellReuseIdentifier: PlayerTableViewCell.identifier)
+//        playerTableViewCell is table view cell that can be also and teamTableViewCell, depending on parameters
+            tableView.translatesAutoresizingMaskIntoConstraints = false
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
     }
+    func addSubviews(){
+        if ( titleSection == "All players") {
+
+            view.addSubview(navigationView)
+
+        } else {
+            view.addSubview(navigationView2)
+
+        }
+        view.addSubview(tableView)
+        view.addSubview(searchView)
+    }
     func addConstraints(){
-        navigationView.snp.makeConstraints {
-            $0.height.equalTo(100)
+    
+        if ( titleSection == "All players") {
+            navigationView.snp.makeConstraints {
+                $0.height.equalTo(65)
+                $0.width.equalToSuperview()
+                $0.top.equalToSuperview()
+            }
+        } else {
+            navigationView2.snp.makeConstraints {
+                
+                $0.height.equalTo(65)
+                $0.width.equalToSuperview()
+                $0.top.equalToSuperview()
+            }
+
+        }
+        if(titleSection == "All players") {
+        searchView.snp.makeConstraints{
+            $0.height.equalTo(30)
             $0.width.equalToSuperview()
-            $0.top.equalToSuperview()
+            $0.top.equalTo(navigationView.snp.bottom)
+        }
+        } else {
+            searchView.snp.makeConstraints{
+                $0.height.equalTo(30)
+                $0.width.equalToSuperview()
+                $0.top.equalTo(navigationView2.snp.bottom)
+            }
         }
         tableView.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.bottom).offset(50)
+            $0.top.equalTo(searchView.snp.bottom).offset(100)
             $0.width.equalToSuperview()
         }
     }
+    
  
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if(searchView.searchBar.text?.count)! != 0 {
+            sortedArray.removeAll()
+            sortedPlayers.removeAll()
+            if (titleSection == "All players") {
+                for player in allPlayers{
+                    let range = (player.first_name + " " + player.last_name).lowercased().range(of: searchView.searchBar.text!, options :
+                                                            .caseInsensitive, range:nil, locale:nil)
+                    if range != nil {
+                        self.sortedArray.append(player.first_name + player.last_name)
+                        self.sortedPlayers.append(player)
+            }
+           }
+        }
+        else {
+         for team in allTeams{
+         let range = (team.full_name).lowercased().range(of: searchView.searchBar.text!, options :
+                                                            .caseInsensitive, range:nil, locale:nil)
+                    if range != nil {
+                        self.sortedArray.append(team.full_name)
+                     }
+         }
+        }
+       }
+        return true;
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        searchView.searchBar.resignFirstResponder()
+        searchView.searchBar.text = ""
+        self.sortedArray.removeAll()
+        fillWholeArray()
+        tableView.reloadData()
+        return true;
+    }
+    
+    func pushController(){
+        let exploreVC = ExploreVC()
+        navigationController?.pushViewController(exploreVC, animated: true)
+    }
 }
+
 
 extension ExploreVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        let sortedArray = self.sortedArray
+        return sortedArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerTableViewCell.identifier, for: indexPath) as! PlayerTableViewCell
+
+        let sortedArray = self.sortedArray
+        
+        if(titleSection == "All players") {
+        if let data = ExploreVC.userDefaults.value(forKey: sortedArray[indexPath.row]){
+            cell.setRealImage(name: sortedArray[indexPath.row], data: data as! Data)
+        }
+        else
+        {
+            let urlString = "http://academy-2022.dev.sofascore.com/api/v1/academy/player-image/player/" + String(sortedPlayers[indexPath.row].id)
+//        name of wholeArray(index) = name of allPlayers(index)
+//
+            guard let url = URL(string: urlString) else {
+                let placeholderIndex = String(sortedPlayers[indexPath.row].id % 3)
+                let placeholderName = "placeholder" + placeholderIndex
+                cell.setZeplinImage(name: sortedArray[indexPath.row], imageName: placeholderName)
+                return cell
+            }
+            if let data2 = try? Data(contentsOf: url) {
+                cell.setRealImage(name: sortedArray[indexPath.row], data: data2)
+                ExploreVC.userDefaults.set(data2, forKey: sortedArray[indexPath.row])
+            }
+        }
+        }
+        else {
+            cell.setZeplinImage(name: sortedArray[indexPath.row], imageName: sortedArray[indexPath.row])
+        }
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -68,6 +247,8 @@ extension ExploreVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+    
+        
 }
 
 

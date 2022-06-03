@@ -8,12 +8,11 @@
 import Foundation
 import UIKit
 
-//▼
-class NavigationTop: UIView {
+
+class NavigationView: UIView {
     
     private var title1: String?
     let nbaImg = UIImageView()
-    let searchView = SearchView()
     init(title1: String) {
         super.init(frame: .zero)
         self.title1 = title1
@@ -42,7 +41,6 @@ class NavigationTop: UIView {
 
     private func addSubviews()  {
         addSubview(nbaImg)
-        addSubview(searchView)
     }
 
     private func styleViews()  {
@@ -58,12 +56,8 @@ class NavigationTop: UIView {
             $0.leading.equalToSuperview().offset(17)
             $0.top.equalToSuperview().offset(24)
         }
-        searchView.snp.makeConstraints{
-            $0.top.equalTo(nbaImg.snp.bottom).offset(5)
-            $0.width.equalToSuperview()
-        }
-        
     }
+   
 }
 
 

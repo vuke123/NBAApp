@@ -51,6 +51,20 @@ class PlayerTeamButton: UIButton {
     }
 
     @objc func refreshTable() {
+        let label = "Player"
+        let userDefaults = UserDefaults.standard
+        if  label == userDefaults.value(forKey: "ExploreFragments") as! String {
+            userDefaults.set("Teams", forKey: "ExploreFragments")
+            
+        }
+        else {
+            userDefaults.set("Player", forKey: "ExploreFragments")
+        }
+        let exploreVC = ExploreVC()
+        exploreVC.fillWholeArray()
+        exploreVC.pushController()
+//        why i can not approach to navController?, i did some weird stuff here..
+//    how many user defaults one swift file have
     }
 }
 

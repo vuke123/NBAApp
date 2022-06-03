@@ -7,23 +7,28 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class SeasonsVC: UIViewController {
 
-    private let navigationView = NavigationTop(title1:"Seasons")
+    private let navigationView = NavigationView(title1:"Seasons")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemPink
-        view.addSubview(navigationView)
+        view.backgroundColor = .black
+        addSubviews()
         addConstraints()
         self.navigationController?.isNavigationBarHidden = true
-
         
     }
+    
+    func addSubviews(){
+        view.addSubview(navigationView)
+    }
+    
     func addConstraints(){
         navigationView.snp.makeConstraints {
-            $0.height.equalTo(100)
+            $0.height.equalTo(65)
             $0.width.equalToSuperview()
             $0.top.equalToSuperview()
         }

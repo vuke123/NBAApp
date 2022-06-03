@@ -7,10 +7,10 @@
 import Foundation
 import UIKit
 
-class SearchView: UIView {
+class SearchView: UIView{
     
     let symbol = UIImageView()
-    private var searchBar = CustomTextField(color: .white)
+    var searchBar = SearchField(color: .white)
     init() {
         super.init(frame: .zero)
         backgroundColor = .blue
@@ -43,7 +43,7 @@ class SearchView: UIView {
         searchBar.snp.makeConstraints{
             $0.width.equalTo(240)
             $0.leading.equalToSuperview().offset(15)
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(5)
             $0.bottom.equalToSuperview().inset(5)
         }
         symbol.snp.makeConstraints{
@@ -54,6 +54,9 @@ class SearchView: UIView {
             
         }
     }
+    
+    
+    
+    
 }
-
 

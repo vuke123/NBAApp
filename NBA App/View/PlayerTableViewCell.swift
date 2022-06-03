@@ -11,20 +11,25 @@ import UIKit
 class PlayerTableViewCell: UITableViewCell {
     static let identifier = "PlayerTableViewCell"
     
-    private let myImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "player")
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    private let myLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.text = "NBA Player"
-        label.textColor = .systemBlue
-        return label
-    }()
+    private let myImageView = UIImageView()
+    private let myLabel = UILabel()
+    
+    func setRealImage(name: String, data: Data) {
+        myLabel.text = name
+        myLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        myImageView.image = UIImage(data: data)
+        myImageView.contentMode = .scaleAspectFit
+        myImageView.clipsToBounds = true
+
+    }
+    func setZeplinImage(name: String, imageName: String){
+        myLabel.text = name
+        myLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        myImageView.image = UIImage(named: imageName)
+        myImageView.contentMode = .scaleAspectFit
+        myImageView.clipsToBounds = true
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .orange

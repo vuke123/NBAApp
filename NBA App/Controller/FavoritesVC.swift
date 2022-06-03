@@ -7,23 +7,26 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class FavoritesVC: UIViewController {
 
-    private let navigationView = NavigationTop(title1:"Favorites")
+    private let navigationView = NavigationView(title1:"Favorites")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        view.addSubview(navigationView)
+        addSubviews()
         addConstraints()
         self.navigationController?.isNavigationBarHidden = true
+    }
+    func addSubviews(){
+        view.addSubview(navigationView)
 
-        
     }
     func addConstraints(){
         navigationView.snp.makeConstraints {
-            $0.height.equalTo(100)
+            $0.height.equalTo(65)
             $0.width.equalToSuperview()
             $0.top.equalToSuperview()
         }
