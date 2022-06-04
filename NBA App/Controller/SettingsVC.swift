@@ -24,6 +24,7 @@ class SettingsVC: UIViewController {
         addSubviews()
         addConstraints()
         self.setupDeleteTap()
+        self.setupAboutVC()
         self.navigationController?.isNavigationBarHidden = true
         self.aboutView.paragraph.numberOfLines = 0
     }
@@ -33,11 +34,23 @@ class SettingsVC: UIViewController {
         print("delete Favorites")
 //        delete favorites from user defaults
     }
-    
     func setupDeleteTap(){
         let deleteTap = UITapGestureRecognizer(target: self, action: #selector(self.deleteFavorites(_:)))
         self.deleteFavs.isUserInteractionEnabled = true
         self.deleteFavs.addGestureRecognizer(deleteTap)
+    }
+
+    @objc func goToAboutVC (_ sender:
+            UITapGestureRecognizer) {
+        print("go to AboutVC")
+        let aboutVC = AboutActivityVC()
+        navigationController?.pushViewController(aboutVC, animated: true)
+//        delete favorites from user defaults
+    }
+    func setupAboutVC  (){
+        let moreInfoLabel = UITapGestureRecognizer(target: self, action: #selector(self.goToAboutVC(_:)))
+        self.aboutView.moreInfo.isUserInteractionEnabled = true
+        self.aboutView.moreInfo.addGestureRecognizer(moreInfoLabel)
     }
     
     

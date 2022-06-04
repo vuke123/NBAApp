@@ -28,6 +28,7 @@ class AboutView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
    func style(){
         title.text = titleText
         title.textColor = .black

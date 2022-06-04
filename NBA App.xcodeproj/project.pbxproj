@@ -10,10 +10,16 @@
 		7800F9FE28426BE200E1CF06 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7800F9FD28426BE200E1CF06 /* NavigationView.swift */; };
 		7800FA002842721500E1CF06 /* PlayerTeamButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7800F9FF2842721500E1CF06 /* PlayerTeamButton.swift */; };
 		7800FA022842AD6500E1CF06 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7800FA012842AD6500E1CF06 /* SearchView.swift */; };
+		7880CAAF284B7270005C4FB8 /* SofaScoreLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7880CAAE284B7270005C4FB8 /* SofaScoreLabel.swift */; };
+		7880CAB1284B7EC8005C4FB8 /* TeamActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7880CAB0284B7EC8005C4FB8 /* TeamActivity.swift */; };
 		7881B2B4284A1CFE00D3650E /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7881B2B3284A1CFE00D3650E /* AboutView.swift */; };
 		78862A6B283E8513000A25D7 /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78862A6A283E8513000A25D7 /* PlayerTableViewCell.swift */; };
 		789292CA2841510F00FBB614 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789292C92841510F00FBB614 /* SearchField.swift */; };
 		789292D22841720200FBB614 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 789292D12841720200FBB614 /* SnapKit */; };
+		7895A87E284A5D7400FC1E72 /* AboutActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895A87D284A5D7400FC1E72 /* AboutActivityVC.swift */; };
+		7895A880284A93CC00FC1E72 /* PlayerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895A87F284A93CC00FC1E72 /* PlayerActivity.swift */; };
+		7895A882284A951F00FC1E72 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895A881284A951F00FC1E72 /* TeamInfoView.swift */; };
+		7895A884284A958700FC1E72 /* PlayerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895A883284A958700FC1E72 /* PlayerInfoView.swift */; };
 		789720A828453017006978FF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789720A728453017006978FF /* Player.swift */; };
 		789720AA2845334C006978FF /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789720A92845334C006978FF /* Team.swift */; };
 		789720AF284538B1006978FF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789720AE284538B1006978FF /* NetworkManager.swift */; };
@@ -35,9 +41,15 @@
 		7800F9FD28426BE200E1CF06 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		7800F9FF2842721500E1CF06 /* PlayerTeamButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTeamButton.swift; sourceTree = "<group>"; };
 		7800FA012842AD6500E1CF06 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		7880CAAE284B7270005C4FB8 /* SofaScoreLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SofaScoreLabel.swift; sourceTree = "<group>"; };
+		7880CAB0284B7EC8005C4FB8 /* TeamActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamActivity.swift; sourceTree = "<group>"; };
 		7881B2B3284A1CFE00D3650E /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		78862A6A283E8513000A25D7 /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		789292C92841510F00FBB614 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		7895A87D284A5D7400FC1E72 /* AboutActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutActivityVC.swift; sourceTree = "<group>"; };
+		7895A87F284A93CC00FC1E72 /* PlayerActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerActivity.swift; sourceTree = "<group>"; };
+		7895A881284A951F00FC1E72 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
+		7895A883284A958700FC1E72 /* PlayerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInfoView.swift; sourceTree = "<group>"; };
 		789720A728453017006978FF /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		789720A92845334C006978FF /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		789720AE284538B1006978FF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -79,6 +91,9 @@
 				7800F9FF2842721500E1CF06 /* PlayerTeamButton.swift */,
 				789720B028453A1E006978FF /* CustomError.swift */,
 				7881B2B3284A1CFE00D3650E /* AboutView.swift */,
+				7895A881284A951F00FC1E72 /* TeamInfoView.swift */,
+				7895A883284A958700FC1E72 /* PlayerInfoView.swift */,
+				7880CAAE284B7270005C4FB8 /* SofaScoreLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -109,6 +124,9 @@
 				78A1AEAE283D172D004CE6D0 /* FavoritesVC.swift */,
 				78A1AEB0283D1745004CE6D0 /* SeasonsVC.swift */,
 				78A1AEB2283D1761004CE6D0 /* SettingsVC.swift */,
+				7895A87D284A5D7400FC1E72 /* AboutActivityVC.swift */,
+				7895A87F284A93CC00FC1E72 /* PlayerActivity.swift */,
+				7880CAB0284B7EC8005C4FB8 /* TeamActivity.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -230,14 +248,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7880CAB1284B7EC8005C4FB8 /* TeamActivity.swift in Sources */,
 				78A1AEAF283D172D004CE6D0 /* FavoritesVC.swift in Sources */,
+				7895A882284A951F00FC1E72 /* TeamInfoView.swift in Sources */,
 				789720B128453A1E006978FF /* CustomError.swift in Sources */,
+				7880CAAF284B7270005C4FB8 /* SofaScoreLabel.swift in Sources */,
 				78B8736128367BEE008C3A7A /* ViewController.swift in Sources */,
+				7895A880284A93CC00FC1E72 /* PlayerActivity.swift in Sources */,
 				789720AA2845334C006978FF /* Team.swift in Sources */,
 				78AACE582848466F00004BD4 /* TeamData.swift in Sources */,
 				78B8735D28367BEE008C3A7A /* AppDelegate.swift in Sources */,
 				7881B2B4284A1CFE00D3650E /* AboutView.swift in Sources */,
 				78AACE562848466400004BD4 /* PlayerData.swift in Sources */,
+				7895A884284A958700FC1E72 /* PlayerInfoView.swift in Sources */,
 				78A1AEAD283D171F004CE6D0 /* ExploreVC.swift in Sources */,
 				7800FA022842AD6500E1CF06 /* SearchView.swift in Sources */,
 				789720A828453017006978FF /* Player.swift in Sources */,
@@ -247,6 +270,7 @@
 				7800FA002842721500E1CF06 /* PlayerTeamButton.swift in Sources */,
 				78A1AEB1283D1745004CE6D0 /* SeasonsVC.swift in Sources */,
 				789720AF284538B1006978FF /* NetworkManager.swift in Sources */,
+				7895A87E284A5D7400FC1E72 /* AboutActivityVC.swift in Sources */,
 				78A1AEB3283D1761004CE6D0 /* SettingsVC.swift in Sources */,
 				789292CA2841510F00FBB614 /* SearchField.swift in Sources */,
 			);

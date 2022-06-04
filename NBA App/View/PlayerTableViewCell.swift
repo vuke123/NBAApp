@@ -26,8 +26,8 @@ class PlayerTableViewCell: UITableViewCell {
         myLabel.text = name
         myLabel.font = .systemFont(ofSize: 20, weight: .bold)
         myImageView.image = UIImage(named: imageName)
-        myImageView.contentMode = .scaleAspectFit
-        myImageView.clipsToBounds = true
+        
+        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){

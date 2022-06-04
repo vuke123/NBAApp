@@ -183,7 +183,7 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
        }
         return true;
     }
-    
+  
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         searchView.searchBar.resignFirstResponder()
         searchView.searchBar.text = ""
@@ -196,6 +196,24 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
     func pushController(){
         let exploreVC = ExploreVC()
         navigationController?.pushViewController(exploreVC, animated: true)
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(titleSection=="All players"){
+        let player = sortedPlayers[indexPath.row]
+        navigationController?.present(
+            UINavigationController(rootViewController: PlayerActivity(player: player)),
+            animated: true)
+        }
+        else {
+            let teamString = sortedArray[indexPath.row]
+            if let team = allTeams.first(where: {$0.full_name == teamString}) {
+                    navigationController?.present(
+                        UINavigationController(rootViewController: TeamActivity(team: team)),
+                        animated: true)
+                } else {
+                   print("No team in list")
+                }
+            }
     }
 }
 
