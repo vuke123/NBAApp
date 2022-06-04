@@ -32,6 +32,16 @@ class PlayerInfoView: UIView {
         addSubviews()
         addConstraints()
     }
+    init(team: Team){
+        super.init(frame: .zero)
+        height.text = "CONFERENCE"
+        heightNumber.text = team.conference
+        weight.text = "DIVISION"
+        weightNumber.text = team.division
+        //        need to set fonts
+        addSubviews()
+        addConstraints()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

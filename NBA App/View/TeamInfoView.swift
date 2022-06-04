@@ -38,6 +38,23 @@ class TeamInfoView: UIView {
         addSubviews()
         addConstraints()
     }
+    init(team: Team){
+        super.init(frame: .zero)
+        teamLogo.image = UIImage(named: team.full_name)
+        teamLogo.contentMode = .scaleAspectFit
+        teamLogo.clipsToBounds = true
+        teamLabel.text = team.abbreviation
+        teamLabel2.text = team.full_name
+        position.text = team.city.uppercased()
+//        need to set fonts
+        positionImg.image = UIImage(systemName:"location")
+        teamLogo.contentMode = .scaleAspectFit
+        teamLogo.clipsToBounds = true
+        positionImg.contentMode = .scaleAspectFit
+        positionImg.clipsToBounds = true
+        addSubviews()
+        addConstraints()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
