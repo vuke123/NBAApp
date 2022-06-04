@@ -18,7 +18,7 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
    private var allTeams: [Team] = []
    private var sortedArray: [String] = []
     private var sortedPlayers:[Player] = []
-    
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var tableView: UITableView!
     
     private let navigationView = NavigationView(title1: "Players  ▼")
@@ -30,31 +30,37 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .blue
         exploreFragment()
-        fillWholeArray()
         configureTableView()
 //      combination with UserDefaults to changing titleSection
         tableView.backgroundColor = .white
-        tableView.dataSource = self
         searchView.searchBar.delegate = self
-        tableView.delegate = self
         addSubviews()
         addConstraints()
         self.navigationController?.isNavigationBarHidden = true
     }
     func fillWholeArray() {
+        activityIndicator.startAnimating()
         if(titleSection == "All teams"){
+            
             NetworkManager.shared.getAllTeams() { [weak self] result in
                 guard let self = self else { return }
 
                 switch result {
                 case .success(let allTeams):
                     self.allTeams  = allTeams
+                    print(allTeams)
+                    print("allTeams")
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.activityIndicator.stopAnimating()
+                    }
                 case .failure(let error):
                     print(error)
+                    print("dsaiua22d")
+
                 }
             }
             var count = 0
-            
             for team in allTeams {
                    sortedArray[count] = team.full_name
                    count+=1
@@ -63,39 +69,50 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
         } else {
 
             titleSection = "All players"
-            NetworkManager.shared.getAllPlayers() { [weak self] result in
+            NetworkManager.shared.getAllPlayers() {
+                [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let allPlayers):
                     self.allPlayers  = allPlayers
+                  
+                    DispatchQueue.main.async {
+                        self.funkcija(allPlayers: allPlayers)
+                        self.tableView.reloadData()
+                        self.activityIndicator.stopAnimating()
+                    }
                 case .failure(let error):
                     print(error)
+                    print("dsaiuad")
                 }
             }
-            var count = 0
-            
-               for player in allPlayers {
-                   sortedArray[count] = player.first_name + " " + player.last_name
-                   print(player.first_name)
-                   print("sejo")
-                   sortedPlayers[count] = player
-                   count+=1
-                }
     }
   }
+    func funkcija(allPlayers: [Player]) {
+      
+           for player in allPlayers {
+               let playerx = player.first_name + " " + player.last_name
+               sortedArray.append(playerx)
+               print(playerx)
+               sortedPlayers.append(player)
+            }
+    }
     func exploreFragment(){
         
         guard  let explore = ExploreVC.userDefaults.value(forKey: "ExploreFragment") else {
             ExploreVC.userDefaults.set("Player", forKey: "ExploreFragment")
             titleSection = "All players"
+            print("ihsaiodsaon")
             return
         }
+        print("iodsnaoias")
         if explore as! String == "Player" {
             titleSection = "All players"
         }
         else {
             titleSection = "All teams"
         }
+        fillWholeArray()
         return
     }
     func configureTableView(){
@@ -103,6 +120,9 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
             tableView.register(PlayerTableViewCell.self, forCellReuseIdentifier: PlayerTableViewCell.identifier)
 //        playerTableViewCell is table view cell that can be also and teamTableViewCell, depending on parameters
             tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        print("konfiguriro table view")
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

@@ -23,12 +23,14 @@ class PlayerInfoView: UIView {
     init(player: Player){
         super.init(frame: .zero)
         height.text = "HEIGHT"
-        heightNumber.text = String(player.height_feet) + "\'"
-        + String(player.height_inches) + "\""
+        heightNumber.text = "visok"
+//        heightNumber.text = String(player.height_feet!) + "\'"
+//        + String(player.height_inches!) + "\""
+//        weight.text = "WEIGHT"
+//        weightNumber.text = String(player.weight_pounds!) + "lb"
+//        //        need to set fonts
         weight.text = "WEIGHT"
-        weightNumber.text = String(player.weight) + "lb"
-        //        need to set fonts
-
+        weightNumber.text = "debel"
         addSubviews()
         addConstraints()
     }

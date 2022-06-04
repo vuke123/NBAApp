@@ -11,10 +11,10 @@ struct Player: Decodable{
     var id: Int
     var first_name: String
     var last_name: String
-    var height_feet: Int
-    var height_inches: Int
+    var height_feet: Int?
+    var height_inches: Int?
     var position: String
     var team: Team
-    var weight: Int
+    var weight_pounds: Int?
     
 }

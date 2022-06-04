@@ -12,7 +12,7 @@ public class NetworkManager {
 
     static let shared = NetworkManager()
 
-    private init () {} // create only one instance!
+    private init () {}
 
     func getAllPlayers(completed: @escaping (Result<[Player], CustomError>) -> Void ) {
 
