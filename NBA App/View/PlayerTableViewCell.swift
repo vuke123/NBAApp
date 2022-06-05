@@ -20,21 +20,23 @@ class PlayerTableViewCell: UITableViewCell {
         myImageView.image = UIImage(data: data)
         myImageView.contentMode = .scaleAspectFit
         myImageView.clipsToBounds = true
-
+      print("real")
     }
     func setZeplinImage(name: String, imageName: String){
         myLabel.text = name
         myLabel.font = .systemFont(ofSize: 20, weight: .bold)
         myImageView.image = UIImage(named: imageName)
-        
+        print("zeplin")
         
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .orange
+        print("naranca")
         contentView.addSubview(myImageView)
         contentView.addSubview(myLabel)
+        print(myLabel.text)
         contentView.layer.cornerRadius = 10
     }
     required init?(coder: NSCoder) {

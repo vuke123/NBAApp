@@ -20,6 +20,7 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
     private var sortedPlayers:[Player] = []
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var tableView: UITableView!
+    private var imageUrl: String = ""
     
     private let navigationView = NavigationView(title1: "Players  ▼")
     private let navigationView2 = NavigationView(title1: "Teams  ▼")
@@ -96,6 +97,9 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
                print(playerx)
                sortedPlayers.append(player)
             }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     func exploreFragment(){
         
@@ -130,11 +134,12 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
     }
     func addSubviews(){
         if ( titleSection == "All players") {
-
+             print("all players nav View")
             view.addSubview(navigationView)
 
         } else {
             view.addSubview(navigationView2)
+            print("all players nav View2")
 
         }
         view.addSubview(tableView)
@@ -147,10 +152,12 @@ class ExploreVC: UIViewController, UITableViewDelegate, UITextFieldDelegate {
                 $0.height.equalTo(65)
                 $0.width.equalToSuperview()
                 $0.top.equalToSuperview()
+                print("all players constr nav View")
+
             }
         } else {
             navigationView2.snp.makeConstraints {
-                
+                print("all players constr nav View2")
                 $0.height.equalTo(65)
                 $0.width.equalToSuperview()
                 $0.top.equalToSuperview()
@@ -244,6 +251,7 @@ extension ExploreVC: UITableViewDataSource {
         return sortedArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("uso")
         let cell = tableView.dequeueReusableCell(withIdentifier: PlayerTableViewCell.identifier, for: indexPath) as! PlayerTableViewCell
 
         let sortedArray = self.sortedArray
@@ -251,30 +259,44 @@ extension ExploreVC: UITableViewDataSource {
         if(titleSection == "All players") {
         if let data = ExploreVC.userDefaults.value(forKey: sortedArray[indexPath.row]){
             cell.setRealImage(name: sortedArray[indexPath.row], data: data as! Data)
+            print("usao u userDef")
         }
         else
         {
-            let urlString = "http://academy-2022.dev.sofascore.com/api/v1/academy/player-image/player/" + String(sortedPlayers[indexPath.row].id)
-//        name of wholeArray(index) = name of allPlayers(index)
-//
-            guard let url = URL(string: urlString) else {
-                let placeholderIndex = String(sortedPlayers[indexPath.row].id % 3)
-                let placeholderName = "placeholder" + placeholderIndex
-                cell.setZeplinImage(name: sortedArray[indexPath.row], imageName: placeholderName)
-                return cell
+            NetworkManager.shared.getImgUrl(for: String(sortedPlayers[indexPath.row].id)) {
+                [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let imageUrl):
+                    self.imageUrl  = imageUrl
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                    let placeholderIndex = String(self.sortedPlayers[indexPath.row].id % 3)
+                    let placeholderName = "placeholder" + placeholderIndex
+                    cell.setZeplinImage(name: sortedArray[indexPath.row], imageName: placeholderName)
+                }
+            }
+            guard let url = URL(string: imageUrl) else {
+                  return cell
             }
             if let data2 = try? Data(contentsOf: url) {
                 cell.setRealImage(name: sortedArray[indexPath.row], data: data2)
                 ExploreVC.userDefaults.set(data2, forKey: sortedArray[indexPath.row])
+
             }
         }
-        }
-        else {
+         
+        } else {
             cell.setZeplinImage(name: sortedArray[indexPath.row], imageName: sortedArray[indexPath.row])
+            print("usao u tim")
         }
         
         return cell
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
@@ -288,7 +310,6 @@ extension ExploreVC: UITableViewDataSource {
     
         
 }
-
 
 
 
