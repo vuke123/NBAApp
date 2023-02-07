@@ -15,5 +15,6 @@ struct Team: Decodable{
     var full_name: String
     var city: String
     var conference: String
+ 
     var division: String
 }
